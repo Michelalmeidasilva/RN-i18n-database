@@ -24,7 +24,7 @@ type StyledProps = SpaceProps &
 
 export interface ContainerProps extends StyledProps {
   as?: any;
-  orientation: "row" | "column";
+  flexDirection: "row" | "column";
 }
 
 const Container: FC<ContainerProps> = styled.View<ContainerProps>(

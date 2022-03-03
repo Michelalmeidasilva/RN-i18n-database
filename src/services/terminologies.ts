@@ -1,18 +1,22 @@
-export type LanguageValues = {
-  [key in LanguageKeys]: string;
-};
-
 export interface TerminologiesResponse {
   data: {
     attributes: {
-      home: HomeTerminologies;
+      // en: {
+      //   home: HomeTerminologies;
+      // };
+      // es: {
+      //   home: HomeTerminologies;
+      // };
+      en: any;
+      es: any;
     };
   };
 }
 
 export interface HomeTerminologies {
-  header_title: LanguageValues;
-  footer_title: LanguageValues;
+  header: any;
+  footer: any;
+  confirm_buttom: any;
 }
 
 export type LanguageKeys = "pt" | "es" | "en";
@@ -21,21 +25,34 @@ export const fetchTerminologies = (): TerminologiesResponse => {
   const terminologies = {
     data: {
       attributes: {
-        home: {
-          header_title: {
-            en: "Home",
-            pt: "Inicio",
-            es: "Comienzo",
+        en: {
+          home: {
+            footer: {
+              title: "created by Michel Almeida",
+            },
+            confirm_buttom: {
+              title: "confirm",
+            },
+            header: {
+              title: "Introduction",
+            },
           },
-          footer_title: {
-            en: "created by michel",
-            pt: "criado por michel",
-            es: "creado por michel",
+        },
+        es: {
+          home: {
+            footer: {
+              title: "creacíon de Michel Almeida",
+            },
+            confirm_buttom: {
+              title: "confirmar",
+            },
+            header: {
+              title: "introduccion",
+            },
           },
         },
       },
     },
   };
-
   return terminologies;
 };

@@ -1,39 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { Button, Text } from "react-native";
 import { Container } from "../../components";
-import { useLanguage } from "../../context/LanguageProvider";
-
-import { fetchTerminologies, HomeTerminologies } from "../../services";
 
 export const Home = () => {
-  const { language } = useLanguage();
-
-  const [homeTerminologies, setHomeTerminologies] =
-    useState<HomeTerminologies>();
-
-  useEffect(() => {
-    const fetchData = () => {
-      const { data } = fetchTerminologies();
-
-      setHomeTerminologies(data.attributes.home);
-    };
-
-    fetchData();
-  }, []);
+  const { t } = useTranslation("home");
 
   return (
-    <Container orientation="row" flex={1}>
-      <Container orientation="column" flex={9}>
-        <Text>{homeTerminologies?.header_title[language]}</Text>
-      </Container>
+    <Container flexDirection="column" flex={1}>
+      <>
+        <Container flexDirection="column" flex={4}>
+          <Text style={{ fontSize: 20 }}>{t("header.title")}</Text>
+        </Container>
 
-      <Container orientation="column">
-        <Button title={"test"} />
-      </Container>
+        <Container flexDirection="column" flex={5}>
+          <Button title={t("confirm_buttom.title")} />
+        </Container>
 
-      <Container orientation="column" flex={1}>
-        <Text>{homeTerminologies?.footer_title[language]}</Text>
-      </Container>
+        <Container flexDirection="column" flex={1}>
+          <Text style={{ fontSize: 20 }}>{t("footer.title")}</Text>
+        </Container>
+      </>
     </Container>
   );
 };
