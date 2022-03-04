@@ -31,7 +31,7 @@ export const fetchTerminologies = (): TerminologiesResponse => {
               title: "created by Michel Almeida",
             },
             confirm_buttom: {
-              title: "confirm",
+              title: "Confirm",
             },
             header: {
               title: "Introduction",
@@ -44,10 +44,10 @@ export const fetchTerminologies = (): TerminologiesResponse => {
               title: "creacíon de Michel Almeida",
             },
             confirm_buttom: {
-              title: "confirmar",
+              title: "Confirmar",
             },
             header: {
-              title: "introduccion",
+              title: "Introduccion",
             },
           },
         },

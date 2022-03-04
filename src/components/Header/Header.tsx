@@ -18,13 +18,15 @@ const HeaderComponent = (): JSX.Element => {
     >
       <LanguageSwitcher />
 
-      <Text
-        style={{
-          fontSize: 30,
-        }}
-      >
-        Home
-      </Text>
+      <Container flexDirection="column" flex={8}>
+        <Text
+          style={{
+            fontSize: 30,
+          }}
+        >
+          Home
+        </Text>
+      </Container>
     </Container>
   );
 };

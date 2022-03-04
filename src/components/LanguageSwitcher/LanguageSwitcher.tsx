@@ -7,10 +7,10 @@ const LanguageSwitcher = () => {
   const { i18n } = useTranslation("language");
 
   return (
-    <Container mr="100px" flexDirection="column">
+    <Container mr="100px" p={"5px"} flexDirection="row" flex={2}>
       <TouchableOpacity
         style={{
-          marginBottom: 10,
+          marginRight: 10,
         }}
         onPress={() => {
           i18n.changeLanguage("es");
@@ -21,7 +21,7 @@ const LanguageSwitcher = () => {
 
       <TouchableOpacity
         style={{
-          marginBottom: 10,
+          marginRight: 10,
         }}
         onPress={() => {
           i18n.changeLanguage("en");
@@ -32,10 +32,10 @@ const LanguageSwitcher = () => {
 
       <TouchableOpacity
         onPress={() => {
-          i18n.changeLanguage("jp");
+          i18n.changeLanguage("pt");
         }}
       >
-        <Text>JP</Text>
+        <Text>PT</Text>
       </TouchableOpacity>
     </Container>
   );

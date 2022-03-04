@@ -38,8 +38,6 @@ export default function useTerminologies(): useTerminologiesValues {
 
         i18n.addResourceBundle("en", "home", translation.en.home);
         i18n.addResourceBundle("es", "home", translation.es.home);
-
-        console.log(JSON.stringify(i18n, null, 2));
       } catch (err) {
         console.log(err);
       } finally {

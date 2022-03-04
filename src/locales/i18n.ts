@@ -1,16 +1,19 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { NativeModules, Platform } from "react-native";
-
-import { TerminologiesDAO } from "../database/daos/terminologies-dao";
 import { getLanguage, setLanguage } from "../utils";
+
 import pt from "./translations/pt.json";
 
+const supportedLanguages = ["en", "pt", "es"];
+
+const defaultLang = "pt";
+
 const i18nextConfig = {
-  lng: "en",
-  resources: { pt: pt },
-  debug: true,
-  fallbackLng: "en",
+  resources: {
+    pt,
+  },
+  fallbackLng: "pt",
   react: {
     bindI18nStore: "added",
     useSuspense: false,
@@ -20,30 +23,42 @@ const i18nextConfig = {
   },
 };
 
-const languageDetector = {
-  type: "languageDetector",
-  async: true,
-  detect: async (callback: any) => {
-    const storedLanguage = await getLanguage();
-    if (storedLanguage) {
-      return callback(storedLanguage);
-    }
+i18n
+  .use({
+    type: "languageDetector",
+    async: true,
+    cacheUserLanguage: () => {},
+    detect: async (callback) => {
+      const storedLanguage = await getLanguage();
 
-    let phoneLanguage = null;
-    if (Platform.OS === "android") {
-      phoneLanguage = NativeModules.I18nManager.localeIdentifier;
-    } else {
-      phoneLanguage = NativeModules.SettingsManager.settings.AppleLocale;
-    }
+      if (storedLanguage) {
+        return callback(storedLanguage);
+      }
 
-    phoneLanguage = phoneLanguage?.replace("_", "-");
+      const locale =
+        Platform.OS === "ios"
+          ? NativeModules.SettingsManager?.settings?.AppleLocale ||
+            NativeModules.SettingsManager?.settings?.AppleLanguages[0] ||
+            ""
+          : NativeModules.I18nManager?.localeIdentifier || "";
 
-    return callback(phoneLanguage);
-  },
-  init: () => {},
-  cacheUserLanguage: (language: string) => setLanguage(language),
-};
+      const [lowerCaseLocale] = locale.split("_");
 
-i18n.use(languageDetector).use(initReactI18next).init(i18nextConfig);
+      if (supportedLanguages.includes(lowerCaseLocale)) {
+        setLanguage(lowerCaseLocale);
+        callback(lowerCaseLocale);
+      }
+
+      console.warn(
+        `locale ${lowerCaseLocale} from ${locale} is not supported, defaulting to ${defaultLang}`
+      );
+      return defaultLang;
+    },
+    init: () => {},
+  })
+  .use(initReactI18next)
+  .init(i18nextConfig);
+
+console.log(JSON.stringify(i18n, null, 4));
 
 export default i18n;
